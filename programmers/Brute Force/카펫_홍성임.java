@@ -3,19 +3,13 @@ class Solution {
         int width = 3;
         int height = 3;
         int total = brown + yellow;
-        while(true) {
-            if(total % width == 0) {
-                height = total / width;
-                if(width >= height && (width - 2) * (height -2) == yellow) {
-                    break;
-                } else {
-                    width++;
-                }
-            } else {
-                width++;
-            }
+
+        for(width = 3; width < brown; width++) {
+          height = total / width;
+          if(width * height == total && width >= height && (width - 2) * (height -2) == yellow) {
+            return new int[] {width, height};
+          }
         }
-        int[] answer = {width, height};
-        return answer;
+        return null;
     }
 }
