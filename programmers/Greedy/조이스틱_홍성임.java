@@ -17,7 +17,8 @@ class Solution {
             int right = (i * 2) + (size - j);
             int left = i + ((size - j) * 2);
             leftRight = Math.min(Math.min(left, right), leftRight);
-		}
+		    }
+
         return upDown + leftRight;
     }
 }
