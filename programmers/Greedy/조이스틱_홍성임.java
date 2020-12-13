@@ -13,7 +13,7 @@ class Solution {
         for (int i = 0, j; i < size; i++) {
             j = i + 1;
             while(j < size && name.charAt(j) == 'A') j++;
-            if(name.charAt(i) == 'A' && j == size + 1) break;
+            if(name.charAt(i) == 'A' && j > size) break;
             int right = (i * 2) + (size - j);
             int left = i + ((size - j) * 2);
             leftRight = Math.min(Math.min(left, right), leftRight);
