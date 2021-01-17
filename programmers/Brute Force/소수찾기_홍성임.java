@@ -3,35 +3,42 @@ import java.util.stream.*;
 
 class Solution {
     public int solution(String numbers) {
-        Set<Integer> numSet = new HashSet<>();
-        makeNumbers("", numbers, numSet);
-        System.out.println(numSet);
-        long answer = numSet.stream().filter((s) -> {
-            int count = 0;
-            for(int i = 2; i < s; i++) {
-                if(s % i == 0) {
-                    count++;
-                    break;
-                }
-            }
-            return s > 1 && count == 0;
-        }).count();
-        return (int) (long) answer;
-    }
+        int answer = 0;
+        int num = 10000000;
+        Set<Integer> primeSet = new HashSet<>(); //모든 소수
+        Set<Integer> numSet = new HashSet<>(); //numbers로 만들 수 있는 모든 수
+        boolean check[] = new boolean[10000001];
+        check[0] = check[1] = true;
 
-    private static void makeNumbers(String prefix, String str, Set<Integer> numSet){
-        int n = str.length();
-
-        if(prefix.length() == 1) {
-            numSet.add(Integer.parseInt(prefix));
+        for(int i = 2; i < num; i++) {
+            if(check[i]) continue;
+            primeSet.add(i);
+            for(int j = 2; i*j <= num; j++) {
+                check[i * j] = true;
+          }
         }
 
-        if (n == 0) {
-            numSet.add(Integer.parseInt(prefix));
-        } else {
-            for (int i = 0; i < n; i++) {
-                makeNumbers(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1), numSet);
-            }
+        makeNumbers("", numbers, numSet);
+
+        while(numSet.iterator().hasNext()) {
+            int n = (int)numSet.iterator().next();
+            numSet.remove(n);
+          if(primeSet.contains(n)) {
+              answer++;
+          }
+
+        }
+        return answer;
+    }
+
+    private static void makeNumbers(String prefix, String str, Set<Integer> set){
+        int n = str.length();
+        if(!prefix.equals("")) {
+           set.add(Integer.valueOf(prefix));
+        }
+
+        for (int i = 0; i < n; i++){
+          makeNumbers(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n), set);
         }
     }
 }
